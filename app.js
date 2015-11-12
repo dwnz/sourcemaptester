@@ -85,6 +85,11 @@ io.on('connection', function(socket) {
 			console.log("Got", url, "(" + response.statusCode + ")");
 			var mapFiles = body.match(regex);
 
+			if(!mapFiles){
+				socket.emit('log','ERROR: no log files found');
+				return;
+			}
+
 			if (mapFiles.length > 1) {
 				socket.emit('log', "ERROR: Too many map files");
 				return;
