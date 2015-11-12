@@ -59,7 +59,7 @@ io.on('connection', function(socket) {
 			return;
 		}
 
-		if (url.indexOf("http://") === -1) {
+		if (url.indexOf("http://") === -1 && indexOf('https://') === -1) {
 			url = 'http://' + url;
 		}
 
