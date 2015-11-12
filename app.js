@@ -54,6 +54,11 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on('process', function(url) {
+		if(!url){
+			socket.emit('log','ERROR: No url');
+			return;
+		}
+
 		if (!url.contains("http://")) {
 			url = 'http://' + url;
 		}
