@@ -114,6 +114,7 @@ io.on('connection', function(socket) {
 
 					if (scriptName === smc.sources[z]) {
 						socket.emit('log', "ERROR: Source map source (" + smc.sources[z] + ") is the same as the script being checked (" + scriptName + "), it shouldn't be");
+						return;
 					}
 				}
 
