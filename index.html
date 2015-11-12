@@ -1,40 +1,51 @@
 <html>
 	<head>
 		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-	    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 		<link text="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	</head>
 	<body>
 		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h1>Source Map Tester</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel">
+						<div class="form-group">
+							<label>
+								Javascript URL
+							</label>
+							<input type="url" id="url" class="form-control input-block">
+							
+						</div>
+						<input type="button" id="process" value="Validate" class="btn btn-primary">
+					</div>
+				</div>
+			</div>
 			<div class="panel">
 				<label>
 					Javascript URL
-					<input type="url" id="url" class="input">
 				</label>
-				<input type="button" id="process" value="Validate" class="btn btn-primary">
-			</div>
-			<div class="panel">
-				<h5>Log</h5>
-				<ul id="log"></ul>
-			</div>
+
+			<ol id="log"></ol>
 		</div>
-
-		<script>
-			$(function(){
-				var socket = io();
-
-				$('#process').click(function(){
-					$('#log').html('');
-					$(this).attr('disabled','disabled').val('Processing...');
-					socket.emit('process',$('#url').val());
-				});
-
-				socket.on('log', function(msg){
-					$('#log').append('<li>' + msg + '</li>');
-				});
-
-				socket.on('done',function(){});
+	</div>
+	<script>
+		$(function(){
+			var socket = io();
+			$('#process').click(function(){
+				$('#log').html('');
+				$(this).attr('disabled','disabled').val('Processing...');
+				socket.emit('process',$('#url').val());
 			});
-		</script>
-	</body>
+			socket.on('log', function(msg){
+				$('#log').append('<li>' + msg + '</li>');
+			});
+			socket.on('done',function(){});
+		});
+	</script>
+</body>
 </html>
