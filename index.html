@@ -5,7 +5,11 @@
 		<link text="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	</head>
 	<body>
-		<div class="container">
+		<div class="container"  id="loader">
+			<h1 class="text-center">Connecting...</h1>
+			<h5 class="text-center">This shouldn't take long</h5>
+		</div>
+		<div class="container hidden" id="view">
 			<div class="row">
 				<div class="col-md-12">
 					<h1>Source Map Tester</h1>
@@ -29,7 +33,6 @@
 				<label>
 					Log
 				</label>
-
 			<ol id="log"></ol>
 		</div>
 	</div>
@@ -40,6 +43,10 @@
 				$('#log').html('');
 				$(this).attr('disabled','disabled').val('Processing...');
 				socket.emit('process',$('#url').val());
+			});
+			socket.on('connect', function(){
+				$('#loader').remove();
+				$('#view').removeClass('hidden');
 			});
 			socket.on('log', function(msg){
 				$('#log').append('<li>' + msg + '</li>');
