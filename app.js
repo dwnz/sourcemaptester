@@ -86,7 +86,7 @@ io.on('connection', function(socket) {
 			var mapFiles = body.match(regex);
 
 			if(!mapFiles){
-				socket.emit('log','ERROR: no log files found');
+				socket.emit('log','ERROR: no source map references found');
 				return;
 			}
 
