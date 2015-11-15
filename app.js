@@ -66,6 +66,7 @@ d.run(function() {
 		socket.on('process', function(url) {
 			if (!url) {
 				socket.emit('log', 'ERROR: No url');
+				socket.emit('done');
 				return;
 			}
 
@@ -88,6 +89,7 @@ d.run(function() {
 				if (error || response.statusCode !== 200) {
 					socket.emit('log', "Getting " + url + " failed - " + response.statusCode + error);
 					console.log("Getting", url, "failed -", response.statusCode, error);
+					socket.emit('done');
 					return;
 				}
 
@@ -97,11 +99,13 @@ d.run(function() {
 
 				if (!mapFiles) {
 					socket.emit('log', 'ERROR: no source map references found');
+					socket.emit('done');
 					return;
 				}
 
 				if (mapFiles.length > 1) {
 					socket.emit('log', "ERROR: Too many map files");
+					socket.emit('done');
 					return;
 				}
 
@@ -111,6 +115,7 @@ d.run(function() {
 				request.get(mapUrl, function(err, response, body) {
 					if (err) {
 						socket.emit('log', 'ERROR: Couldn\'t get map file, error: ' + response.statusCodee);
+						socket.emit('done');
 						return;
 					}
 
@@ -124,6 +129,7 @@ d.run(function() {
 
 						if (scriptName === smc.sources[z]) {
 							socket.emit('log', "ERROR: Source map source (" + smc.sources[z] + ") is the same as the script being checked (" + scriptName + "), it shouldn't be");
+							socket.emit('done');
 							return;
 						}
 					}
@@ -148,6 +154,7 @@ d.run(function() {
 				}
 
 				socket.emit('log', 'ERROR getting source file: ' + sourceFileUrl + " (" + response.statusCode + ")");
+				socket.emit('done');
 				return;
 			}
 
@@ -155,6 +162,7 @@ d.run(function() {
 
 			try {
 				socket.emit('log', 'Everything looks OK');
+				socket.emit('done');
 				return;
 			} catch (e) {
 				console.log("Error");

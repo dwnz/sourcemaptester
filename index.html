@@ -35,15 +35,13 @@
 					Log
 				</label>
 			<ol id="log"></ol>
-
-
-			<br><br><br>
-			<footer>
-				<p>
-					Built (very quickly) by <a href="https://twitter.com">@dwnz</a>. Want to make it better? <a href="https://github.com/dwnz/sourcemaptester">Github</a>
-				</p>
-			</footer>
 		</div>
+		
+		<footer class="text-center">
+			<small>
+			Built (very quickly) by <a href="https://twitter.com">@dwnz</a>. Want to make it better? Submit a PR on <a href="https://github.com/dwnz/sourcemaptester">Github</a>
+			</small>
+		</footer>
 	</div>
 	<script>
 		$(function(){
@@ -60,7 +58,11 @@
 			socket.on('log', function(msg){
 				$('#log').append('<li>' + msg + '</li>');
 			});
-			socket.on('done',function(){});
+			socket.on('done',function(){
+				setTimeout(function(){
+				$('#process').removeAttr('disabled').val('Validate');
+			}, 100);
+			});
 		});
 	</script>
 </body>
