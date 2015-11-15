@@ -3,7 +3,7 @@ Tests JS sourcemap to make sure they're at least slightly valid.
 
 # Using it
 
-Visit [http://sourcemaps.danielwylie.me/] and place your minified JS file into the box. Press Validate. You'll see the log of your Javascript file and Soucemap file being validated.
+Visit http://sourcemaps.danielwylie.me/ and place your minified JS file into the box. Press Validate. You'll see the log of your Javascript file and Soucemap file being validated.
 
 # How it works
 
@@ -13,10 +13,10 @@ Check this repo out and run
 
 # Uses
 
-	* SocketIO
-	* Express
-	* Raygun
-	* Heroku
+* SocketIO
+* Express
+* Raygun
+* Heroku
 
 # Submitting fixes
 
