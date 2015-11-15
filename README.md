@@ -18,6 +18,10 @@ Check this repo out and run
 * Raygun
 * Heroku
 
+# Why is the code crap?
+
+Built this real quickly one afternoon. Needs more <3
+
 # Submitting fixes
 
 Feel free to fork/create a PR, keen as to make this thing awesome.
