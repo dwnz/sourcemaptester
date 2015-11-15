@@ -63,10 +63,6 @@ d.run(function() {
 	});
 
 	io.on('connection', function(socket) {
-		socket.on('chat message', function(msg) {
-			io.emit('chat message', msg);
-		});
-
 		socket.on('process', function(url) {
 			if (!url) {
 				socket.emit('log', 'ERROR: No url');
