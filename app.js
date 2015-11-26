@@ -5,7 +5,7 @@ var raygunClient = new raygun.Client().init({
 
 var d = require('domain').create();
 d.on('error', function(err) {
-	raygunClient.send(err, {}, function() {
+	raygunClient.send(error, {}, function() {
 		console.log(err);
 		process.exit(1);
 	});
@@ -15,6 +15,8 @@ d.run(function() {
 	var app = require('express')();
 	var http = require('http').Server(app);
 	var io = require('socket.io')(http);
+
+    app.set('view engine', 'ejs');
 
 	var SourceMapConsumer = require('source-map').SourceMapConsumer;
 	var request = require('request');
@@ -59,7 +61,9 @@ d.run(function() {
 	}
 
 	app.get('/', function(req, res) {
-		res.sendFile(__dirname + '/index.html');
+		res.render('index', {
+			raygunKey: process.env.RAYGUN_KEY
+		});
 	});
 
 	io.on('connection', function(socket) {
