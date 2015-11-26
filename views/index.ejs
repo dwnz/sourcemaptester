@@ -1,69 +1,90 @@
 <html>
-	<head>
-		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-		<link text="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<title>Source Map Tester</title>
-	</head>
-	<body>
-		<div class="container"  id="loader">
-			<h1 class="text-center">Connecting...</h1>
-			<h5 class="text-center">This shouldn't take long</h5>
-		</div>
-		<div class="container hidden" id="view">
-			<div class="row">
-				<div class="col-md-12">
-					<h1>Source Map Tester</h1>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="panel">
-						<div class="form-group">
-							<label>
-								Javascript URL
-							</label>
-							<input type="url" id="url" class="form-control input-block">
-							
-						</div>
-						<input type="button" id="process" value="Validate" class="btn btn-primary">
-					</div>
-				</div>
-			</div>
-			<div class="panel">
-				<label>
-					Log
-				</label>
-			<ol id="log"></ol>
-		</div>
-		
-		<footer class="text-center">
-			<small>
-			Built (very quickly) by <a href="https://twitter.com">@dwnz</a>. Want to make it better? Submit a PR on <a href="https://github.com/dwnz/sourcemaptester">Github</a>
-			</small>
-		</footer>
-	</div>
-	<script>
-		$(function(){
-			var socket = io();
-			$('#process').click(function(){
-				$('#log').html('');
-				$(this).attr('disabled','disabled').val('Processing...');
-				socket.emit('process',$('#url').val());
-			});
-			socket.on('connect', function(){
-				$('#loader').remove();
-				$('#view').removeClass('hidden');
-			});
-			socket.on('log', function(msg){
-				$('#log').append('<li>' + msg + '</li>');
-			});
-			socket.on('done',function(){
-				setTimeout(function(){
-				$('#process').removeAttr('disabled').val('Validate');
-			}, 100);
-			});
-		});
-	</script>
+<head>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <link text="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <title>Source Map Tester</title>
+
+    <script type="text/javascript">
+        !function (a, b, c, d, e, f, g, h) {
+            a.RaygunObject = e, a[e] = a[e] || function () {
+                        (a[e].o = a[e].o || []).push(arguments)
+                    }, f = b.createElement(c), g = b.getElementsByTagName(c)[0],
+                    f.async = 1, f.src = d, g.parentNode.insertBefore(f, g), h = a.onerror, a.onerror = function (b, c, d, f, g) {
+                h && h(b, c, d, f, g), g || (g = new Error(b)), a[e].q = a[e].q || [], a[e].q.push({
+                    e: g
+                })
+            }
+        }(window, document, "script", "//cdn.raygun.io/raygun4js/raygun.min.js", "rg4js");
+    </script>
+</head>
+<body>
+<div class="container" id="loader">
+    <h1 class="text-center">Connecting...</h1>
+    <h5 class="text-center">This shouldn't take long</h5>
+</div>
+<div class="container hidden" id="view">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Source Map Tester</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="form-group">
+                    <label>
+                        Javascript URL
+                    </label>
+                    <input type="url" id="url" class="form-control input-block">
+
+                </div>
+                <input type="button" id="process" value="Validate" class="btn btn-primary">
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <label>
+            Log
+        </label>
+        <ol id="log"></ol>
+    </div>
+
+    <footer class="text-center">
+        <small>
+            Built (very quickly) by <a href="https://twitter.com">@dwnz</a>. Want to make it better? Submit a PR on <a
+                    href="https://github.com/dwnz/sourcemaptester">Github</a>
+        </small>
+    </footer>
+</div>
+
+<script type="text/javascript">
+    rg4js('apiKey', '<%= raygunKey %>');
+    rg4js('attach', true);
+    rg4js('enablePulse', true);
+</script>
+
+<script>
+    $(function () {
+        var socket = io();
+        $('#process').click(function () {
+            $('#log').html('');
+            $(this).attr('disabled', 'disabled').val('Processing...');
+            socket.emit('process', $('#url').val());
+        });
+        socket.on('connect', function () {
+            $('#loader').remove();
+            $('#view').removeClass('hidden');
+        });
+        socket.on('log', function (msg) {
+            $('#log').append('<li>' + msg + '</li>');
+        });
+        socket.on('done', function () {
+            setTimeout(function () {
+                $('#process').removeAttr('disabled').val('Validate');
+            }, 100);
+        });
+    });
+</script>
 </body>
 </html>
