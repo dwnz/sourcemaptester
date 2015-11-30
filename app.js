@@ -62,7 +62,8 @@ d.run(function() {
 
 	app.get('/', function(req, res) {
 		res.render('index', {
-			raygunKey: process.env.RAYGUN_KEY
+			raygunKey: process.env.RAYGUN_KEY,
+			query: req.query.query
 		});
 	});
 

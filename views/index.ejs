@@ -36,7 +36,7 @@
                     <label>
                         Javascript URL
                     </label>
-                    <input type="url" id="url" class="form-control input-block">
+                    <input type="url" id="url" class="form-control input-block" value="<%= query %>">
 
                 </div>
                 <input type="button" id="process" value="Validate" class="btn btn-primary">
@@ -65,6 +65,7 @@
 </script>
 
 <script>
+    var query = '<%= query %>';
     $(function () {
         var socket = io();
         $('#process').click(function () {
@@ -72,13 +73,20 @@
             $(this).attr('disabled', 'disabled').val('Processing...');
             socket.emit('process', $('#url').val());
         });
+
         socket.on('connect', function () {
             $('#loader').remove();
             $('#view').removeClass('hidden');
+
+            if(query !== ''){
+                $('#process').click();
+            }
         });
+
         socket.on('log', function (msg) {
             $('#log').append('<li>' + msg + '</li>');
         });
+
         socket.on('done', function () {
             setTimeout(function () {
                 $('#process').removeAttr('disabled').val('Validate');
