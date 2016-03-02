@@ -1,4 +1,3 @@
-/* TESTING COMMENT */
 var raygun = require('raygun');
 var raygunClient = new raygun.Client().init({
 	apiKey: process.env.RAYGUN_KEY
